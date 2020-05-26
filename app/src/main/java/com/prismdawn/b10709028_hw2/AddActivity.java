@@ -3,10 +3,13 @@ package com.prismdawn.b10709028_hw2;
 import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.prismdawn.b10709028_hw2.Data.SpwContract.SpwEntry;
 
@@ -23,7 +26,19 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         mNewNameEditText = findViewById(R.id.name_edit_text);
         mNewSizeEditText = findViewById(R.id.count_edit_text);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void addTolist(View view) {
@@ -60,4 +75,5 @@ public class AddActivity extends AppCompatActivity {
         cv.put(SpwEntry.COLUMN_SIZE, size);
         getContentResolver().insert(SpwEntry.CONTENT_URI, cv);
     }
+
 }
